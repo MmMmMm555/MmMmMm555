@@ -1,0 +1,28 @@
+<div style="height: 800px; overflow:auto;" >
+
+{% for room in rooms  %} 
+
+
+<div class="border border-primary">
+    <ul class="list-group">
+        <li class="list-group-item">  
+            <p>Nomi : <a href="{% url 'room' room.id %}" >{{room.name|title}}</a> </p>
+            <small>Yaratuvchi :  <a href="{% url 'user-profile' room.host.id %}">@{{room.host.username}}</a> </small> 
+            <br>
+            <small>Mavzu : {{room.topic.name}}</small>
+            <br>
+            <small style="text-align: right;"  >Yaratildi : {{room.created|timesince}} avval </small> 
+            {% if request.user == room.host %}
+            <br><br>
+            <span style="text-align: right;" ><a class="btn btn-info btn-sm" href="{% url 'update-room' room.id %}">Tahrirlash</a></span>
+            <span style="text-align: right;" ><a class="btn btn-info btn-sm" href="{% url 'delete-room' room.id %}">O'chirish</a></span>
+            {% endif %}
+            <p style="text-align: right;"  ><a  class="btn btn-success " href="{% url 'room' room.id %}">Kirish </a></p>
+
+        </li>
+    </ul>
+</div>
+
+
+{% endfor %}
+</div>

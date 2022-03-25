@@ -1,0 +1,14 @@
+
+
+<div style="height: 800px; overflow:auto;" >
+
+{% for topic in topics %}
+
+<div class="border border-primary">
+    <ul class="list-group">
+        <li class="list-group-item"> <a href="{% url 'home' %}?q={{topic.name}}"> <h6>{{topic.name}}</h6> </a> </li>
+    </ul>
+</div>
+
+{% endfor %} 
+</div>      

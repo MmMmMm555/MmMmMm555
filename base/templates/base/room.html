@@ -1,0 +1,146 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+
+<style>
+    .xona {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
+</style>
+
+<div  class="xona m-2 " >
+    <div class="mr-2 ml-2">
+
+        <ul class="list-group">
+            <li class="list-group-item active" aria-current="true"> 
+                <h2 style="text-align: center;" >CHATLAR</h2>
+                <span   class="badge bg-success rounded-pill"> <p>{{room_messages.count}} ta habar mavjud </p> </span>
+            </li>
+        </ul>
+        <hr>
+
+        <div class="mr-4 ml-4" >
+            <!-- <span style="text-align: right;" > Yaratuvchi : <a  href="{% url 'user-profile' room.host.id %}" >  @{{room.host.username}} </a></span> -->
+            <h6  style="text-align: center;" >Chat : {{room.name|title}} </h6>
+
+            <p>
+                <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chat haqida qisqacha </a>
+            </p>
+            <div class="row">
+                <div class="col">
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                        <div class="card card-body">
+                            {{room.description}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+        
+        <div class="mr-4 ml-4" >
+            {% if request.user.is_authenticated %}
+            
+            <form method="POST" action="" enctype="multipart/form-data" >
+                {% csrf_token %} 
+                                                    
+                <input  class="form-control" id="message_input"  type="text" name="body" placeholder="Habar yozish ... "  >
+                <input type="file" name="img" >
+                <button type="submit" class="btn btn-info ">Jo'natish</button>
+
+
+            </form>
+            <br>
+
+
+
+<!-- 
+
+            <form action="" method="POST" id="myform">
+                {% csrf_token %} 
+                <div class="form-group">
+                  <div class="input-group">
+                    <input  class="form-control" id="message_input"  type="text" name="body" placeholder="Habar yozish ... "  >  
+                  </div>
+                </div>
+            </form>
+            -->
+
+
+            {% endif %}
+        </div>
+
+
+
+
+
+<!-- 
+        TEMURNI KODI 
+        <script>
+            const message_input = document.getElementById("#message_input");
+             
+        </script>
+        <!-- / TEMURNI KODI -->
+        
+        <div class="mr-3 ml-3" style="height: 500px; overflow:auto;" >
+            {% for message in room_messages  %}
+            {% if message.user == request.user %}
+            <div class="border border-primary" >
+                <ul class="list-group">
+                    <li class="list-group-item" >
+                        <h4 style="text-align: right; font-size: 15px; " >{{message.created|timesince}} {{message.created|time}}  | <a class="btn btn-outline" href="{% url 'delete-message' pk=message.id %}">O'chirish</a> </h4> 
+                        
+                        <h5 style="text-align: right;"  > {{message.body}} </h5> 
+
+                        {% if message.img %}
+                        <img style="  margin-left: 580px;  " src="{{ message.img.url }}" alt="" width="400">
+                        {% endif %}
+
+                    </li>
+                </ul>
+            </div>
+            
+            {% else %}
+            
+            <div class="border border-danger">
+                <ul class="list-group">
+                    <li class="list-group-item"><small>@{{message.user}}  .  {{message.created|timesince}} {{message.created|time}} </small> <h4>{{message.body}} </h4> 
+                        {% if message.img %}
+                        <img src="{{ message.img.url }}" alt="" width="400">
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- <div class="border border-primary">
+                <p>@{{message.user}}  .  {{message.created|time}} </p> <br>
+                <h4 >{{message.body}} </h4>    
+            </div> -->
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+       
+    </div>
+
+
+    <div class="m-2" >
+        <ul class="list-group">
+            <li class="list-group-item active" aria-current="true"> <h2>Qatnashuvchilar</h2>
+                <span class="badge bg-success rounded-pill"><p>{{ participants.count }} ta qatnashuvchi mavjud  </p></span>
+            </li>
+        </ul>
+        <hr> <hr>
+        {% for participant in participants %}
+        <ul class="list-group">
+            <li class="list-group-item">  <h4> <a href="{% url 'user-profile' participant.id %}" >@ {{participant.username}} </a> </h4> </li>
+        </ul>
+        {% endfor %}
+    </div>
+
+
+</div>
+
+{% endblock content %}
+

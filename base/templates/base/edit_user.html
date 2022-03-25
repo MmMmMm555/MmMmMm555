@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+<div>
+<div class="list-group-item active" aria-current="true">
+  <h2  style="text-align: center;" >@{{ user | title}}</h2>
+</div>
+<form class="m-5" method="POST" action="">
+    {% csrf_token %}
+    {% for field in form  %}
+      
+    <label for="">{{field.label}}</label>
+
+    <div class="input-group mb-3">
+        <span  class="input-group-text" >@</span>
+        <input class="form-control"{{ field }}
+      </div>
+
+    <hr>    
+    <!-- <input type="text" value="submit"> -->
+    {% endfor %}
+    <div  style="text-align: center;">
+    <input  class="btn btn-primary " type="submit" value="Tasdiqlash" />
+    </div>
+</form>
+</div>
+{% endblock content %}

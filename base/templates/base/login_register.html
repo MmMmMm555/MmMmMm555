@@ -1,0 +1,68 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+{% if page == 'login' %}
+
+<div class="m-5" >
+    <h3 style="text-align: center; color: blue;" >Login</h3><br><br>
+    <form  style="text-align: center;" method="POST" action="" >
+        {% csrf_token %}
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Foydalanuvchi nomi :</span>
+        <input type="text" class="form-control" name="username" placeholder="Enter username ..."  > 
+        </div>
+
+
+
+        <div class="input-group mb-3">
+        <span class="input-group-text " id="basic-addon1">Parol :</span>
+        <input type="password" class="form-control " name="password" placeholder="Enter password ..."  >
+        </div>
+        <input type="submit" class="btn btn-primary btn-lg " value="Login">
+    </form>
+    <p style="color: red;" >Hali ro'yhatdan o'tmadingizmi ?</p>
+    <a class="btn btn-primary " href="{% url 'register' %}">Registratsiya</a>
+</div>
+
+{% else %}
+
+<div  class="m-5" >
+    <span style="text-align: center; color: blue;" > <h3>Registratsiya</h3></span>
+    <span>
+        <a class="btn btn-warning btn-sm  " data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Eslatmalar</a>
+    </span> <br><br>
+      
+    <div class="row">
+        <div class="col">
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <div class="card card-body">
+                <li>Sizning parolingizda lotin alifbosining katta va kichik harflari , sonlar va belgilar bo'lishi kerak !</li>
+                <li>Sizning parolingiz kamida 8 ta belgidan iborat bo'lishi kerak</li>   
+                <li>Sizning parolingiz boshqa shaxsiy malumotlaringizga o'xshamasligi kerak</li>
+                <li>Sizning parolingiz oddiy bo'lmasligi kerak</li>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <form  style="text-align: center;" method="POST" action="">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="input-group mb-3">
+        <span class="input-group-text " id="basic-addon1" >{{field.label}}</span>
+        <input class="form-control " {{ field }}
+        </div>
+        {% endfor %}
+        <span><input class="btn btn-primary btn-lg m-5 " type="submit" value="register"></span>
+        
+    </form>
+
+    <p style="color: red;" >Allaqachon ro'yhatdan o'tdingizmi ?</p><br>
+    <a class="btn btn-primary " href="{% url 'login' %}">Login</a>
+</div>
+
+{% endif %}
+
+{% endblock content %}

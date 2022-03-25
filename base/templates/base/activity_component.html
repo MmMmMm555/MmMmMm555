@@ -1,0 +1,32 @@
+<div style="height: 800px; overflow:auto;" >
+{% for message in room_messages  %}
+
+<div class="border border-primary" >
+    <ul class="list-group">
+        <li class="list-group-item"> 
+
+
+            <p> Foydalanuvchi : <a href="{% url 'user-profile' message.user.id %}">@{{ message.user }} </a> </p>
+            <p>Chat : {{ message.room|title}}</p>
+            <p> Vaqt :{{ message.created|time}}</p>
+            <span><a class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Xabar</a></span>
+            {% if message.user == request.user %}
+            <span><a class="btn btn-outline-primary btn-sm" href="{% url 'delete-message' pk=message.id %}">O'chirish</a></span>
+            {% endif %}    
+
+            <div class="row">
+                <div class="col">
+                  <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <div class="card card-body">
+                        <p>{{message.body}}</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          
+        </li>
+    </ul>
+</div>
+
+{% endfor %}
+</div>

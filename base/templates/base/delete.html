@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+<form style="text-align: center;" class="m-5" method="POST" action="">
+    {% csrf_token %}
+    <h3 style="color: red;" > Rostdanham " {{ room.name | title }} {{ room.body | title }} " ni o'chirmoqchimisiz !  </h3>
+    <br>
+
+    <button type="submit" class="btn btn-success btn-lg m-5 ">  <a href="{{request.META.HTTP_REFERER }}">YO'Q</a> </button>
+    <button type="submit" class="btn btn-danger btn-lg m-3">  HA </button>
+  
+</form>
+
+{% endblock content %}
